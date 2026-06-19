@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futuristic Menu Button</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      background: #f0ede8;
+      font-family: 'Segoe UI', sans-serif;
+      flex-wrap: wrap;
+      padding: 40px;
+    }
+
+    /* ── SHARED SELECTOR ── */
+    .selector {
+      position: relative;
+      width: 220px;
+      height: 220px;
+    }
+
+    .selector ul {
+      list-style: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .selector ul li {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 44px;
+      height: 44px;
+      margin: -22px;
+    }
+
+    .selector ul li input[type="radio"] {
+      appearance: none;
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      margin: 0;
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .selector ul li .icon {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .selector ul li .icon svg {
+      width: 18px;
+      height: 18px;
+      transition: all 0.3s ease;
+    }
+
+    /* 5 items spaced 72° apart */
+    .selector ul li:nth-child(1) { transform: rotate(0deg)    translateY(-88px) rotate(0deg); }
+    .selector ul li:nth-child(2) { transform: rotate(72deg)   translateY(-88px) rotate(-72deg); }
+    .selector ul li:nth-child(3) { transform: rotate(144deg)  translateY(-88px) rotate(-144deg); }
+    .selector ul li:nth-child(4) { transform: rotate(216deg)  translateY(-88px) rotate(-216deg); }
+    .selector ul li:nth-child(5) { transform: rotate(288deg)  translateY(-88px) rotate(-288deg); }
+
+    /* ── LIGHT VERSION ── */
+    .selector.light {
+      filter: drop-shadow(0 8px 32px rgba(0,0,0,0.18));
+    }
+
+    .selector.light::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #ffffff, #d8d4ce);
+      box-shadow:
+        8px 8px 20px rgba(0,0,0,0.15),
+        -4px -4px 12px rgba(255,255,255,0.9),
+        inset 2px 2px 6px rgba(255,255,255,0.8),
+        inset -2px -2px 6px rgba(0,0,0,0.1);
+    }
+
+    .selector.light .knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 80px;
+      height: 80px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, #f5f3f0, #c8c4be);
+      box-shadow:
+        4px 4px 12px rgba(0,0,0,0.2),
+        -3px -3px 8px rgba(255,255,255,0.85),
+        inset 1px 1px 3px rgba(255,255,255,0.7),
+        inset -1px -1px 3px rgba(0,0,0,0.1);
+      z-index: 2;
+      transition: transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1);
+    }
+
+    .selector.light .knob::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #888;
+      box-shadow: 0 0 4px rgba(0,0,0,0.3);
+    }
+
+    .selector.light ul li .icon {
+      background: transparent;
+    }
+
+    .selector.light ul li .icon svg {
+      stroke: #aaa;
+      fill: none;
+    }
+
+    .selector.light ul li input:checked + .icon svg {
+      stroke: #555;
+    }
+
+    /* ── DARK VERSION ── */
+    .selector.dark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #1a1b2e;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 8px 40px rgba(0,0,0,0.6);
+    }
+
+    /* outer ring */
+    .selector.dark::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.07);
+    }
+
+    .selector.dark .knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 72px;
+      height: 72px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, #2e2f4a, #14151f);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow:
+        0 0 20px rgba(80,80,200,0.15),
+        inset 0 0 12px rgba(0,0,0,0.6),
+        inset 0 1px 1px rgba(255,255,255,0.08);
+      z-index: 2;
+      transition: transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1);
+    }
+
+    /* glowing indicator dot on knob */
+    .selector.dark .knob::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #c8b8ff;
+      box-shadow: 0 0 8px 2px rgba(180,140,255,0.7), 0 0 2px #fff;
+    }
+
+    .selector.dark ul li .icon {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .selector.dark ul li .icon svg {
+      stroke: rgba(255,255,255,0.3);
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .selector.dark ul li input:checked + .icon {
+      background: rgba(180,140,255,0.12);
+      border-color: rgba(180,140,255,0.35);
+      box-shadow: 0 0 12px rgba(180,140,255,0.25);
+    }
+
+    .selector.dark ul li input:checked + .icon svg {
+      stroke: #c8b8ff;
+      filter: drop-shadow(0 0 4px rgba(180,140,255,0.8));
+    }
+
+    /* hover effects */
+    .selector.dark ul li input:hover + .icon {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* track ring */
+    .track-ring {
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.06);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── LABEL ── */
+    .label {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LIGHT VERSION -->
+  <div class="wrap">
+    <div class="selector light" id="sel-light">
+      <div class="knob" id="knob-light"></div>
+      <ul>
+        <li>
+          <input type="radio" name="choice-a" checked>
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-a">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-a">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-a">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-a">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <p class="label">Light</p>
+  </div>
+
+  <!-- DARK VERSION -->
+  <div class="wrap">
+    <div class="selector dark" id="sel-dark">
+      <div class="track-ring"></div>
+      <div class="knob" id="knob-dark"></div>
+      <ul>
+        <li>
+          <input type="radio" name="choice-b" checked>
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="1.8"><polyline points="15 18 9 12 15 6"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-b">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-b">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-b">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="choice-b">
+          <div class="icon">
+            <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <p class="label">Dark</p>
+  </div>
+
+  <script>
+    function initKnob(selectorId, knobId, name) {
+      const inputs = document.querySelectorAll(`input[name="${name}"]`);
+      const knob   = document.getElementById(knobId);
+      const count  = inputs.length;
+      const step   = 360 / count;
+      let current  = 0;
+
+      function rotateTo(index) {
+        const target = step * index;
+        // keep rotation continuous (no jumps)
+        const diff = target - current;
+        if (Math.abs(diff) > 180) {
+          current += diff > 0 ? diff - 360 : diff + 360;
+        } else {
+          current = target;
+        }
+        knob.style.transform = `translate(-50%, -50%) rotate(${current}deg)`;
+      }
+
+      inputs.forEach((input, i) => {
+        input.addEventListener('change', () => rotateTo(i));
+      });
+    }
+
+    initKnob('sel-light', 'knob-light', 'choice-a');
+    initKnob('sel-dark',  'knob-dark',  'choice-b');
+  </script>
+</body>
+</html>
