@@ -10,8 +10,8 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 3rem 6rem;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 3rem 5rem;
       position: relative; overflow: hidden;
       background: #060606;
     }
@@ -58,8 +58,8 @@
     }
     .hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(4rem, 10vw, 8.5rem);
-      font-weight: 800; line-height: 0.95;
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      font-weight: 800; line-height: 0.93;
       letter-spacing: -0.04em; margin-bottom: 2rem;
       text-shadow: 0 0 80px rgba(232,0,26,0.08);
     }
@@ -303,7 +303,7 @@
       .pp-item:first-child { grid-column: span 2; }
     }
     @media (max-width: 640px) {
-      .hero { padding: 0 1.25rem 4rem; }
+      .hero { padding: 7rem 1.25rem 3.5rem; }
       .hero-watermark { font-size: 5rem; }
       .stats { grid-template-columns: repeat(2, 1fr); }
       .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
