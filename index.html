@@ -4,14 +4,14 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fotograf nemovitostí — Fotografie, Dron, 3D prohlídky</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 8rem 3rem 5rem;
+      display: flex; flex-direction: column;
+      padding: 0;
       position: relative; overflow: hidden;
       background: #060606;
     }
@@ -33,7 +33,7 @@
     }
     .hero-watermark {
       position: absolute; right: -1rem; bottom: -1rem; z-index: 0;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(8rem, 22vw, 18rem);
       font-weight: 800; line-height: 1;
       color: rgba(255,255,255,0.025);
@@ -45,7 +45,12 @@
       width: 3px; background: linear-gradient(to bottom, transparent, var(--red) 20%, var(--red) 80%, transparent);
       z-index: 1;
     }
-    .hero-inner { position: relative; z-index: 2; max-width: 880px; }
+    .hero-inner {
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 6.5rem 2rem 3.5rem;
+      position: relative; z-index: 2;
+    }
     .hero-label {
       font-size: 0.67rem; font-weight: 600; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--red);
@@ -57,16 +62,16 @@
       width: 28px; height: 1px; background: var(--red);
     }
     .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3.5rem, 12vw, 9rem);
-      font-weight: 800; line-height: 0.93;
-      letter-spacing: -0.04em; margin-bottom: 2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(4rem, 14vw, 11rem);
+      font-weight: 800; line-height: 0.9;
+      letter-spacing: -0.02em; margin: 0;
       text-shadow: 0 0 80px rgba(232,0,26,0.08);
     }
     .hero h1 .accent { color: var(--red); }
     .hero-sub {
-      font-size: 1.05rem; color: var(--muted); font-weight: 300;
-      max-width: 480px; line-height: 1.85; margin-bottom: 3rem;
+      font-size: 1rem; color: var(--muted); font-weight: 300;
+      max-width: 460px; line-height: 1.85; margin-bottom: 1.75rem;
       border-left: 2px solid rgba(232,0,26,0.35);
       padding-left: 1.25rem;
     }
@@ -74,8 +79,7 @@
     .hero-inner > * { animation: fadeUp 0.6s ease both; }
     .hero-inner > *:nth-child(1) { animation-delay: 0.05s; }
     .hero-inner > *:nth-child(2) { animation-delay: 0.18s; }
-    .hero-inner > *:nth-child(3) { animation-delay: 0.32s; }
-    .hero-inner > *:nth-child(4) { animation-delay: 0.46s; }
+    .hero-inner > *:nth-child(3) { animation-delay: 0.34s; }
 
     /* ── STATS ── */
     .stats {
@@ -93,7 +97,7 @@
     .stat-item:hover { background: var(--surface2); }
     .stat-item:last-child { border-right: none; }
     .stat-num {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 3rem; font-weight: 800;
       color: var(--red); display: block; letter-spacing: -0.04em;
       line-height: 1;
@@ -113,7 +117,7 @@
     .services::before {
       content: '01';
       position: absolute; right: 2rem; top: 3rem;
-      font-family: 'Syne', sans-serif; font-size: 10rem; font-weight: 800;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 10rem; font-weight: 800;
       color: rgba(255,255,255,0.02); line-height: 1;
       pointer-events: none; user-select: none;
     }
@@ -149,7 +153,7 @@
     .service-card:hover::before { opacity: 1; }
     .service-card:hover::after { transform: scaleX(1); }
     .service-num {
-      font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 4rem; font-weight: 800;
       color: rgba(232,0,26,0.08); line-height: 1; margin-bottom: 1.5rem;
       display: block; letter-spacing: -0.04em;
       transition: color 0.3s;
@@ -157,7 +161,7 @@
     .service-card:hover .service-num { color: rgba(232,0,26,0.15); }
     .service-icon { font-size: 2rem; display: block; margin-bottom: 1.1rem; }
     .service-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem;
       letter-spacing: -0.01em;
     }
@@ -179,7 +183,7 @@
     .why::before {
       content: '02';
       position: absolute; left: 2rem; bottom: 2rem;
-      font-family: 'Syne', sans-serif; font-size: 10rem; font-weight: 800;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 10rem; font-weight: 800;
       color: rgba(255,255,255,0.02); line-height: 1;
       pointer-events: none; user-select: none;
     }
@@ -200,7 +204,7 @@
           transparent 1px, transparent 14px);
     }
     .why-img-ph {
-      font-family: 'Syne', sans-serif; font-size: 4rem;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 4rem;
       color: rgba(255,255,255,0.04); position: relative; z-index: 1;
     }
     .why-img::after {
@@ -215,7 +219,7 @@
       box-shadow: -4px 4px 24px rgba(232,0,26,0.35);
     }
     .why-badge strong {
-      display: block; font-family: 'Syne', sans-serif;
+      display: block; font-family: 'Barlow Condensed', sans-serif;
       font-size: 2.5rem; font-weight: 800; color: white; line-height: 1;
     }
     .why-badge span {
@@ -247,7 +251,7 @@
     .portfolio-preview::before {
       content: '03';
       position: absolute; right: 2rem; bottom: 2rem;
-      font-family: 'Syne', sans-serif; font-size: 10rem; font-weight: 800;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 10rem; font-weight: 800;
       color: rgba(255,255,255,0.02); line-height: 1;
       pointer-events: none; user-select: none;
     }
@@ -275,7 +279,7 @@
     }
     .pp-item:first-child { grid-column: span 2; aspect-ratio: 16/9; }
     .pp-ph {
-      font-family: 'Syne', sans-serif; font-size: 0.62rem;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem;
       letter-spacing: 0.2em; text-transform: uppercase;
       color: rgba(255,255,255,0.12);
     }
@@ -287,7 +291,7 @@
     }
     .pp-item:hover .pp-overlay { opacity: 1; }
     .pp-label {
-      font-family: 'Syne', sans-serif; font-size: 0.72rem;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: white; font-weight: 600;
       transform: translateY(6px); transition: transform 0.35s;
@@ -295,7 +299,7 @@
     .pp-item:hover .pp-label { transform: translateY(0); }
 
     @media (max-width: 1024px) and (min-width: 641px) {
-      .hero { padding: 0 2rem 5rem; }
+      .hero-inner { padding: 6rem 2rem 3rem; }
       .services-intro { grid-template-columns: 1fr; gap: 1.5rem; }
       .services-grid { grid-template-columns: repeat(3, 1fr); }
       .why-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
@@ -303,7 +307,8 @@
       .pp-item:first-child { grid-column: span 2; }
     }
     @media (max-width: 640px) {
-      .hero { padding: 7rem 1.25rem 3.5rem; }
+      .hero-inner { padding: 6rem 1.25rem 2.5rem; }
+      .hero h1 { font-size: clamp(3.5rem, 16vw, 6rem); }
       .hero-watermark { font-size: 5rem; }
       .stats { grid-template-columns: repeat(2, 1fr); }
       .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
@@ -338,10 +343,12 @@
     <div class="hero-inner">
       <div class="hero-label">Profesionální fotograf nemovitostí</div>
       <h1>Nemovitosti<br>v <span class="accent">nejlepším</span><br>světle.</h1>
-      <p class="hero-sub">Fotografie, drony a 3D prohlídky, které skutečně prodávají. Každý záběr navržen tak, aby zaujal kupce na první pohled.</p>
-      <div class="hero-actions">
-        <a href="kontakt.html" class="btn-red">Nezávazná poptávka →</a>
-        <a href="portfolio.html" class="btn-outline">Zobrazit portfolio</a>
+      <div class="hero-bottom">
+        <p class="hero-sub">Fotografie, drony a 3D prohlídky, které skutečně prodávají. Každý záběr navržen tak, aby zaujal kupce na první pohled.</p>
+        <div class="hero-actions">
+          <a href="kontakt.html" class="btn-red">Nezávazná poptávka →</a>
+          <a href="portfolio.html" class="btn-outline">Zobrazit portfolio</a>
+        </div>
       </div>
     </div>
   </section>

@@ -16,7 +16,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Barlow', sans-serif;
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
@@ -34,7 +34,7 @@ nav {
 }
 
 .nav-logo {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 1.1rem; font-weight: 800;
   color: var(--white); letter-spacing: 0.06em;
   text-decoration: none; text-transform: uppercase;
@@ -69,7 +69,7 @@ footer {
   flex-wrap: wrap; gap: 1.5rem;
 }
 .footer-logo {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.95rem; font-weight: 800;
   color: white; letter-spacing: 0.06em; text-transform: uppercase;
   text-decoration: none;
@@ -131,7 +131,7 @@ section { padding: 7rem 3rem; }
 }
 
 .section-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 800; line-height: 1.06;
   letter-spacing: -0.03em; margin-bottom: 1.25rem;
@@ -174,7 +174,7 @@ section { padding: 7rem 3rem; }
   width: 28px; height: 1px; background: var(--red); flex-shrink: 0;
 }
 .page-hero h1 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: clamp(3.8rem, 9vw, 7rem);
   font-weight: 800; line-height: 0.96;
   letter-spacing: -0.04em; margin-bottom: 1.5rem;
@@ -196,7 +196,7 @@ section { padding: 7rem 3rem; }
   padding: 5rem 3rem; text-align: center;
 }
 .cta-strip h2 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: clamp(2rem, 4.5vw, 3.5rem);
   font-weight: 800; color: white;
   line-height: 1.05; margin-bottom: 1.25rem;
