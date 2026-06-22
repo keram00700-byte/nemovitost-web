@@ -145,14 +145,23 @@ section { padding: 7rem 3rem; }
 /* ── PAGE HERO (sub-pages) ── */
 .page-hero {
   padding: 10rem 3rem 5rem;
-  background: var(--surface);
+  background: #060606;
   border-bottom: 1px solid var(--border);
   position: relative; overflow: hidden;
 }
 .page-hero::before {
   content: '';
   position: absolute; left: 0; top: 0; bottom: 0;
-  width: 3px; background: var(--red);
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--red) 20%, var(--red) 80%, transparent);
+}
+.page-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 90% 50%, rgba(232,0,26,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 30% at 5% 90%, rgba(232,0,26,0.04) 0%, transparent 60%);
+  pointer-events: none;
 }
 .page-hero-label {
   font-size: 0.67rem; font-weight: 600; letter-spacing: 0.22em;
@@ -166,15 +175,20 @@ section { padding: 7rem 3rem; }
 }
 .page-hero h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  font-weight: 800; line-height: 1.06;
-  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  font-weight: 800; line-height: 1.0;
+  letter-spacing: -0.03em; margin-bottom: 1.5rem;
+  position: relative; z-index: 1;
 }
 .page-hero h1 span { color: var(--red); }
 .page-hero p {
   font-size: 1.05rem; color: var(--muted); font-weight: 300;
-  max-width: 520px; line-height: 1.8;
+  max-width: 520px; line-height: 1.85;
+  border-left: 2px solid rgba(232,0,26,0.35);
+  padding-left: 1.25rem;
+  position: relative; z-index: 1;
 }
+.page-hero-label { position: relative; z-index: 1; }
 
 /* ── CTA STRIP ── */
 .cta-strip {
