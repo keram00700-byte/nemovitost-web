@@ -155,7 +155,13 @@
     .p-card.featured .p-list li { color: rgba(255,255,255,0.88); }
     .p-card.featured .p-list li::before { color: white; }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) and (min-width: 641px) {
+      .how-split { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .benefits-grid { grid-template-columns: 1fr 1fr; }
+      .demo-box { grid-template-columns: 1fr 1fr; }
+      .pricing-cards { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
       .how-split { grid-template-columns: 1fr; gap: 3rem; }
       .how-visual { display: none; }
       .benefits-grid { grid-template-columns: 1fr; }
@@ -169,6 +175,7 @@
 
   <nav>
     <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <div class="nav-links">
       <a href="fotografie.html" class="nav-link">Fotografie</a>
       <a href="dron.html" class="nav-link">Dron</a>
@@ -366,5 +373,6 @@
     <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
   </footer>
 
+  <script src="nav.js"></script>
 </body>
 </html>

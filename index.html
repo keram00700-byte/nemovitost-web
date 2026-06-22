@@ -212,7 +212,17 @@
     }
     .pp-item:hover .pp-label { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) and (min-width: 641px) {
+      .hero { padding: 0 2rem 5rem; }
+      .stats { grid-template-columns: repeat(4, 1fr); }
+      .services-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card:last-child { grid-column: span 2; }
+      .why-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .pp-grid { grid-template-columns: repeat(2, 1fr); }
+      .pp-item:first-child { grid-column: span 2; }
+    }
+    @media (max-width: 640px) {
       .hero { padding: 0 1.25rem 4rem; }
       .stats { grid-template-columns: repeat(2, 1fr); }
       .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
@@ -230,6 +240,7 @@
 
   <nav>
     <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <div class="nav-links">
       <a href="fotografie.html" class="nav-link">Fotografie</a>
       <a href="dron.html" class="nav-link">Dron</a>
@@ -415,5 +426,6 @@
     <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
   </footer>
 
+  <script src="nav.js"></script>
 </body>
 </html>

@@ -107,7 +107,10 @@
     }
     .lightbox-close:hover { border-color: var(--red); color: var(--red); }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) and (min-width: 641px) {
+      .gallery-masonry { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
       .filter-bar { padding: 1.5rem 1.25rem; }
       .gallery-section { padding: 3rem 1.25rem; }
       .gallery-masonry { grid-template-columns: 1fr 1fr; }
@@ -120,6 +123,7 @@
 
   <nav>
     <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <div class="nav-links">
       <a href="fotografie.html" class="nav-link">Fotografie</a>
       <a href="dron.html" class="nav-link">Dron</a>
@@ -321,5 +325,6 @@
     lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
   </script>
 
+  <script src="nav.js"></script>
 </body>
 </html>
