@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fotografie nemovitostí — Profesionální fotograf</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── WHAT'S INCLUDED ── */
+    .included { background: var(--bg); }
+    .included-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); margin-top: 3.5rem;
+    }
+    .included-item {
+      background: var(--surface); padding: 2.25rem 2rem;
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      transition: background 0.25s;
+    }
+    .included-item:hover { background: var(--surface2); }
+    .inc-icon {
+      font-size: 1.5rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .inc-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem;
+    }
+    .inc-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── PROCESS ── */
+    .process { background: var(--surface); }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-top: 3.5rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 24px; left: 12.5%; right: 12.5%;
+      height: 1px; background: var(--border); z-index: 0;
+    }
+    .step {
+      padding: 0 1.5rem; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .step-num {
+      width: 48px; height: 48px; margin: 0 auto 1.25rem;
+      background: var(--red); color: white;
+      font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem; font-weight: 700; margin-bottom: 0.5rem;
+    }
+    .step-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── GALLERY ── */
+    .gallery { background: var(--bg); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+    .gallery-item {
+      background: var(--surface2); aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .gallery-item.tall { aspect-ratio: 3/4; grid-row: span 2; }
+    .gallery-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.08);
+    }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(232,0,26,0);
+      transition: background 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { background: rgba(232,0,26,0.14); }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--surface); }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); margin-top: 3.5rem;
+    }
+    .price-card {
+      background: var(--surface2); padding: 2.5rem 2rem;
+      position: relative; transition: background 0.25s;
+    }
+    .price-card.featured {
+      background: var(--red);
+    }
+    .price-card.featured .price-name,
+    .price-card.featured .price-amount,
+    .price-card.featured .price-unit,
+    .price-card.featured .price-desc,
+    .price-card.featured .price-feature { color: rgba(255,255,255,0.9); }
+    .price-card.featured .price-amount { color: white; }
+    .price-card:not(.featured):hover { background: #1e1e1e; }
+    .price-name {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+    }
+    .price-amount {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.8rem; font-weight: 800; color: white;
+      line-height: 1; letter-spacing: -0.03em;
+    }
+    .price-unit {
+      font-size: 0.78rem; color: var(--muted); margin-bottom: 1.25rem;
+      display: block; margin-top: 0.35rem;
+    }
+    .price-desc {
+      font-size: 0.82rem; color: var(--muted);
+      line-height: 1.65; margin-bottom: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem;
+    }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .price-feature {
+      font-size: 0.8rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .price-feature::before {
+      content: '✓'; color: var(--red); font-weight: 700; font-size: 0.75rem; flex-shrink: 0;
+    }
+    .price-card.featured .price-feature::before { color: white; }
+
+    @media (max-width: 768px) {
+      .included-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .process-steps::before { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <div class="nav-links">
+      <a href="fotografie.html" class="nav-link active">Fotografie</a>
+      <a href="dron.html" class="nav-link">Dron</a>
+      <a href="3d-prohlidky.html" class="nav-link">3D prohlídky</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="kontakt.html" class="nav-cta">Kontakt</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-label">Služba</div>
+      <h1>Fotografie<br><span>nemovitostí</span></h1>
+      <p>Profesionální interiérová a exteriérová fotografie, která zvýrazní každé přednosti nemovitosti a přitáhne správné kupce.</p>
+    </div>
+  </div>
+
+  <!-- CO JE ZAHRNUTO -->
+  <section class="included">
+    <div class="container">
+      <div class="section-label">Co dostanete</div>
+      <h2 class="section-title">Kompletní balíček<br>profesionální fotografie</h2>
+      <div class="included-grid">
+        <div class="included-item">
+          <span class="inc-icon">🏠</span>
+          <div>
+            <div class="inc-title">Interiérová fotografie</div>
+            <p class="inc-desc">Každá místnost nafocena z nejlepšího úhlu. Důraz na světlo, prostor a atmosféru. Obývací pokoj, kuchyň, ložnice, koupelna i detaily.</p>
+          </div>
+        </div>
+        <div class="included-item">
+          <span class="inc-icon">🌿</span>
+          <div>
+            <div class="inc-title">Exteriérová fotografie</div>
+            <p class="inc-desc">Fasáda, zahrada, terasa, garáž a okolí nemovitosti. Focení za optimálního denního světla pro maximální dojem.</p>
+          </div>
+        </div>
+        <div class="included-item">
+          <span class="inc-icon">✨</span>
+          <div>
+            <div class="inc-title">Profesionální postprodukce</div>
+            <p class="inc-desc">Každá fotografie prochází ruční úpravou expozice, barev a kontrastu. Výsledek — čisté, světlé a prodejné fotografie.</p>
+          </div>
+        </div>
+        <div class="included-item">
+          <span class="inc-icon">📦</span>
+          <div>
+            <div class="inc-title">Rychlé dodání</div>
+            <p class="inc-desc">Fotografie doručeny do 48 hodin od focení přes online galerii v plném rozlišení. Okamžitě připraveny pro realitní portály.</p>
+          </div>
+        </div>
+        <div class="included-item">
+          <span class="inc-icon">📐</span>
+          <div>
+            <div class="inc-title">Správný formát</div>
+            <p class="inc-desc">Fotografie optimalizovány pro Sreality, Bezrealitky, Idealista i sociální sítě. Správné proporce a rozlišení pro každou platformu.</p>
+          </div>
+        </div>
+        <div class="included-item">
+          <span class="inc-icon">🔄</span>
+          <div>
+            <div class="inc-title">Revize zdarma</div>
+            <p class="inc-desc">Nejste spokojeni? Jedna kolo korekce postprodukce je vždy v ceně bez příplatku.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="container">
+      <div class="section-label">Jak to probíhá</div>
+      <h2 class="section-title">Čtyři kroky<br>k perfektním fotkám</h2>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-title">Poptávka</div>
+          <p class="step-desc">Napište nebo zavolejte. Probereme nemovitost, termín a vaše požadavky.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-title">Focení</div>
+          <p class="step-desc">Přijedu na domluvený termín s kompletním vybavením. Focení trvá 1–3 hodiny.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-title">Postprodukce</div>
+          <p class="step-desc">Vyberu nejlepší záběry a provedu profesionální úpravu každé fotografie.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-title">Dodání</div>
+          <p class="step-desc">Do 48 hodin dostanete odkaz na online galerii s fotkami v plném rozlišení.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <div class="container">
+      <div class="section-label">Ukázky</div>
+      <h2 class="section-title">Z mého portfolia</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item tall">
+          <span class="gallery-ph">Interiér</span>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-item">
+          <span class="gallery-ph">Kuchyně</span>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-item">
+          <span class="gallery-ph">Koupelna</span>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-item">
+          <span class="gallery-ph">Exteriér</span>
+          <div class="gallery-overlay"></div>
+        </div>
+        <div class="gallery-item">
+          <span class="gallery-ph">Zahrada</span>
+          <div class="gallery-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <div class="container">
+      <div class="section-label">Ceník</div>
+      <h2 class="section-title">Transparentní<br>ceny bez překvapení</h2>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-name">Základní</div>
+          <div class="price-amount">3 500 Kč</div>
+          <span class="price-unit">byt do 60 m²</span>
+          <p class="price-desc">Ideální pro menší byty a studio apartmány.</p>
+          <ul class="price-features">
+            <li class="price-feature">Do 20 fotografií</li>
+            <li class="price-feature">Interiér + exteriér</li>
+            <li class="price-feature">Postprodukce v ceně</li>
+            <li class="price-feature">Dodání do 48 h</li>
+          </ul>
+        </div>
+        <div class="price-card featured">
+          <div class="price-name">Standard</div>
+          <div class="price-amount">5 500 Kč</div>
+          <span class="price-unit">byt nebo dům do 120 m²</span>
+          <p class="price-desc">Nejoblíbenější balíček pro rodinné domy a větší byty.</p>
+          <ul class="price-features">
+            <li class="price-feature">Do 35 fotografií</li>
+            <li class="price-feature">Interiér + exteriér + zahrada</li>
+            <li class="price-feature">Postprodukce v ceně</li>
+            <li class="price-feature">Dodání do 48 h</li>
+            <li class="price-feature">1 kolo revizí zdarma</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <div class="price-name">Premium</div>
+          <div class="price-amount">Na dotaz</div>
+          <span class="price-unit">větší nemovitosti a developerské projekty</span>
+          <p class="price-desc">Pro rozsáhlejší nemovitosti, komerční projekty nebo kombinaci s dronem.</p>
+          <ul class="price-features">
+            <li class="price-feature">Neomezený počet fotografií</li>
+            <li class="price-feature">Kompletní dokumentace</li>
+            <li class="price-feature">Možnost přidat dron nebo 3D</li>
+            <li class="price-feature">Prioritní dodání</li>
+            <li class="price-feature">Individuální cena</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="section-label" style="justify-content:center; color:rgba(255,255,255,0.65);">
+      <span style="width:28px;height:1px;background:rgba(255,255,255,0.4);display:block;"></span>
+      Rezervujte termín
+    </div>
+    <h2>Připraveni<br>k focení?</h2>
+    <p>Napište mi termín a adresu nemovitosti. Ozvím se do několika hodin s potvrzením.</p>
+    <a href="kontakt.html" class="btn-white">Poptat focení →</a>
+  </div>
+
+  <footer>
+    <a href="index.html" class="footer-logo">FOTO<span>■</span></a>
+    <div class="footer-links">
+      <a href="fotografie.html" class="footer-link">Fotografie</a>
+      <a href="dron.html" class="footer-link">Dron</a>
+      <a href="3d-prohlidky.html" class="footer-link">3D prohlídky</a>
+      <a href="portfolio.html" class="footer-link">Portfolio</a>
+      <a href="kontakt.html" class="footer-link">Kontakt</a>
+    </div>
+    <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kontakt — Fotograf nemovitostí</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── CONTACT LAYOUT ── */
+    .contact-section { background: var(--bg); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 0; border: 1px solid var(--border);
+      margin-top: 3.5rem;
+    }
+
+    /* ── INFO PANEL ── */
+    .contact-info {
+      background: var(--surface);
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--border);
+    }
+    .contact-info-title {
+      font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+      margin-bottom: 0.6rem; letter-spacing: -0.01em;
+    }
+    .contact-info-sub { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem; }
+    .contact-items { display: flex; flex-direction: column; gap: 0; }
+    .contact-item {
+      display: flex; gap: 1.1rem; align-items: flex-start;
+      padding: 1.2rem 0; border-bottom: 1px solid var(--border);
+    }
+    .contact-item:first-child { border-top: 1px solid var(--border); }
+    .contact-ico {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: rgba(232,0,26,0.08); border: 1px solid rgba(232,0,26,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; margin-top: 1px;
+    }
+    .contact-item-label {
+      font-size: 0.67rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.2rem;
+    }
+    .contact-item-value {
+      font-size: 0.9rem; color: var(--text); font-weight: 500;
+      text-decoration: none; transition: color 0.2s;
+    }
+    a.contact-item-value:hover { color: var(--red); }
+
+    .coverage {
+      margin-top: 2.5rem;
+      background: var(--surface2); border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+    .coverage-title {
+      font-size: 0.67rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; display: block;
+    }
+    .coverage-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .coverage-tag {
+      background: rgba(232,0,26,0.08); border: 1px solid rgba(232,0,26,0.2);
+      color: var(--red); font-size: 0.72rem; padding: 0.3rem 0.75rem;
+      letter-spacing: 0.06em; font-weight: 500;
+    }
+
+    /* ── FORM ── */
+    .contact-form { padding: 3rem 2.5rem; }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      margin-bottom: 1px;
+    }
+    .form-row.single { grid-template-columns: 1fr; }
+    .form-field { background: var(--surface2); position: relative; }
+    .form-field label {
+      display: block; padding: 0.9rem 1.25rem 0;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      display: block; width: 100%;
+      background: transparent; border: none; outline: none;
+      color: var(--text); font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; padding: 0.35rem 1.25rem 1rem;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.18); }
+    .form-field select option { background: #1a1a1a; }
+    .form-field textarea { min-height: 130px; resize: vertical; line-height: 1.6; }
+    .form-field::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--red);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .form-field:focus-within::after { transform: scaleX(1); }
+
+    .form-check {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      margin: 1.5rem 0;
+    }
+    .form-check input[type="checkbox"] {
+      appearance: none; width: 18px; height: 18px; flex-shrink: 0;
+      border: 1px solid var(--border); background: var(--surface2);
+      cursor: pointer; margin-top: 1px; position: relative;
+    }
+    .form-check input[type="checkbox"]:checked { background: var(--red); border-color: var(--red); }
+    .form-check input[type="checkbox"]:checked::after {
+      content: '✓'; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); color: white; font-size: 0.7rem; font-weight: 700;
+    }
+    .form-check label { font-size: 0.8rem; color: var(--muted); line-height: 1.5; cursor: pointer; }
+
+    .form-submit { width: 100%; }
+
+    /* ── SUCCESS ── */
+    .success-msg {
+      display: none; background: rgba(232,0,26,0.06);
+      border: 1px solid rgba(232,0,26,0.3);
+      padding: 1.25rem 1.5rem; margin-top: 1.25rem;
+      font-size: 0.85rem; color: var(--red); font-weight: 500;
+    }
+
+    /* ── FAQ ── */
+    .faq { background: var(--surface); }
+    .faq-list { display: flex; flex-direction: column; margin-top: 3rem; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 0; cursor: pointer;
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      gap: 1rem;
+    }
+    .faq-q::after {
+      content: '+'; color: var(--red); font-size: 1.3rem; font-weight: 300;
+      flex-shrink: 0; transition: transform 0.25s;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.8;
+      max-height: 0; overflow: hidden; transition: max-height 0.35s, padding 0.2s;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 1.25rem; }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-info { border-right: none; border-bottom: 1px solid var(--border); }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <div class="nav-links">
+      <a href="fotografie.html" class="nav-link">Fotografie</a>
+      <a href="dron.html" class="nav-link">Dron</a>
+      <a href="3d-prohlidky.html" class="nav-link">3D prohlídky</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="kontakt.html" class="nav-cta active" style="background:transparent; border:1px solid var(--red); color:var(--red);">Kontakt</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-label">Začněme spolupráci</div>
+      <h1>Kontakt</h1>
+      <p>Napište mi nebo zavolejte. Ozvím se zpravidla do několika hodin a připravím nabídku přesně na míru vaší nemovitosti.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- INFO -->
+        <div class="contact-info">
+          <div class="contact-info-title">Spojte se se mnou</div>
+          <p class="contact-info-sub">Pracuji rychle, flexibilně a s důrazem na výsledek. Termín lze domluvit i na poslední chvíli.</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="contact-ico">📞</div>
+              <div>
+                <span class="contact-item-label">Telefon</span>
+                <a href="tel:+420777000000" class="contact-item-value">+420 777 000 000</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-ico">✉️</div>
+              <div>
+                <span class="contact-item-label">E-mail</span>
+                <a href="mailto:info@fotograf-nemovitosti.cz" class="contact-item-value">info@fotograf-nemovitosti.cz</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-ico">🕐</div>
+              <div>
+                <span class="contact-item-label">Dostupnost</span>
+                <span class="contact-item-value">Po–Ne, 7:00–20:00</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-ico">⚡</div>
+              <div>
+                <span class="contact-item-label">Odezva</span>
+                <span class="contact-item-value">Zpravidla do 3 hodin</span>
+              </div>
+            </div>
+          </div>
+          <div class="coverage">
+            <span class="coverage-title">Oblast působení</span>
+            <div class="coverage-tags">
+              <span class="coverage-tag">Praha</span>
+              <span class="coverage-tag">Středočeský kraj</span>
+              <span class="coverage-tag">Brno</span>
+              <span class="coverage-tag">Plzeň</span>
+              <span class="coverage-tag">Celá ČR</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="contact-form">
+          <div class="section-label">Poptávkový formulář</div>
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="jmeno">Jméno a příjmení</label>
+                <input type="text" id="jmeno" placeholder="Jan Novák" required/>
+              </div>
+              <div class="form-field">
+                <label for="telefon">Telefon</label>
+                <input type="tel" id="telefon" placeholder="+420 777 000 000"/>
+              </div>
+            </div>
+            <div class="form-row single">
+              <div class="form-field">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="jan@example.cz" required/>
+              </div>
+            </div>
+            <div class="form-row single">
+              <div class="form-field">
+                <label for="sluzba">Služba</label>
+                <select id="sluzba">
+                  <option value="">Vyberte zájem</option>
+                  <option value="foto">Fotografie nemovitosti</option>
+                  <option value="dron">Dronové záběry</option>
+                  <option value="3d">3D prohlídka</option>
+                  <option value="kombinace">Kombinace služeb</option>
+                  <option value="jine">Jiné</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row single">
+              <div class="form-field">
+                <label for="adresa">Adresa nemovitosti</label>
+                <input type="text" id="adresa" placeholder="Ulice, město"/>
+              </div>
+            </div>
+            <div class="form-row single">
+              <div class="form-field">
+                <label for="zprava">Zpráva</label>
+                <textarea id="zprava" placeholder="Popište nemovitost, termín nebo cokoli dalšího..."></textarea>
+              </div>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="souhlas" required/>
+              <label for="souhlas">Souhlasím se zpracováním osobních údajů za účelem zodpovězení mé poptávky.</label>
+            </div>
+            <button type="submit" class="btn-red form-submit">Odeslat poptávku →</button>
+            <div class="success-msg" id="successMsg">
+              ✓ Vaše poptávka byla odeslána. Ozvu se do několika hodin!
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <div class="section-label">Časté otázky</div>
+      <h2 class="section-title">Odpovědi na<br>nejčastější dotazy</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Jak rychle dostanu fotografie?</div>
+          <div class="faq-a">Standardní fotografie dodávám do 48 hodin od focení. Video a 3D prohlídky do 72 hodin. Pokud potřebujete expresní dodání, domluvíme se individuálně.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Jak se platí?</div>
+          <div class="faq-a">Platba převodem na základě faktury po dodání fotografií. U větších zakázek je možná záloha 30 % předem. Hotovost na místě taktéž možná.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Je focení možné o víkendu nebo večer?</div>
+          <div class="faq-a">Ano, pracuji 7 dní v týdnu. Večerní záběry při golden hour jsou dokonce populární volbou — výsledné fotografie mají úžasnou atmosféru.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Fotím i mimo Prahu?</div>
+          <div class="faq-a">Ano, dojíždím po celé ČR. Do 50 km od Prahy je doprava zdarma, nad tuto vzdálenost se přičítá cestovné dle dohody.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Potřebuji se na focení nějak připravit?</div>
+          <div class="faq-a">Ideálně ukliďte a dekorujte nemovitost, odstraňte osobní věci a nechte přítomné pouze nezbytné vybavení. Skvělý výsledek závisí z 50 % na přípravě nemovitosti — rád poradím předem.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="index.html" class="footer-logo">FOTO<span>■</span></a>
+    <div class="footer-links">
+      <a href="fotografie.html" class="footer-link">Fotografie</a>
+      <a href="dron.html" class="footer-link">Dron</a>
+      <a href="3d-prohlidky.html" class="footer-link">3D prohlídky</a>
+      <a href="portfolio.html" class="footer-link">Portfolio</a>
+      <a href="kontakt.html" class="footer-link">Kontakt</a>
+    </div>
+    <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-q').addEventListener('click', () => {
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // Form submit
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const jmeno = document.getElementById('jmeno').value;
+      const souhlas = document.getElementById('souhlas').checked;
+      if (!email || !jmeno || !souhlas) return;
+      document.getElementById('successMsg').style.display = 'block';
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>

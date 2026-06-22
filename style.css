@@ -1,0 +1,212 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080808;
+  --surface: #101010;
+  --surface2: #181818;
+  --border: rgba(255,255,255,0.07);
+  --red: #E8001A;
+  --red-dark: #C0001A;
+  --white: #FFFFFF;
+  --text: #F0F0F0;
+  --muted: rgba(240,240,240,0.42);
+  --radius: 3px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem; font-weight: 800;
+  color: var(--white); letter-spacing: 0.06em;
+  text-decoration: none; text-transform: uppercase;
+}
+.nav-logo span { color: var(--red); }
+
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+
+.nav-link {
+  font-size: 0.78rem; font-weight: 400;
+  color: var(--muted); text-decoration: none;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-link:hover, .nav-link.active { color: var(--white); }
+
+.nav-cta {
+  background: var(--red); color: var(--white);
+  padding: 0.6rem 1.4rem;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--red-dark); }
+
+/* ── FOOTER ── */
+footer {
+  background: #000;
+  border-top: 1px solid var(--border);
+  padding: 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem; font-weight: 800;
+  color: white; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none;
+}
+.footer-logo span { color: var(--red); }
+.footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+.footer-link {
+  font-size: 0.72rem; color: rgba(255,255,255,0.28);
+  text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: white; }
+.footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.18); }
+
+/* ── BUTTONS ── */
+.btn-red {
+  background: var(--red); color: var(--white);
+  padding: 0.95rem 2.2rem;
+  font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.btn-red:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+.btn-outline {
+  border: 1px solid rgba(255,255,255,0.18); color: var(--muted);
+  padding: 0.95rem 2.2rem;
+  font-size: 0.82rem; font-weight: 400;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.btn-outline:hover { border-color: var(--red); color: var(--red); }
+
+.btn-white {
+  background: white; color: var(--red);
+  padding: 0.95rem 2.5rem;
+  font-size: 0.82rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.btn-white:hover { background: #f0f0f0; transform: translateY(-1px); }
+
+/* ── SECTION BASE ── */
+section { padding: 7rem 3rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+
+.section-label {
+  font-size: 0.67rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--red);
+  margin-bottom: 1.1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 28px; height: 1px; background: var(--red); flex-shrink: 0;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800; line-height: 1.08;
+  letter-spacing: -0.02em; margin-bottom: 1.25rem;
+}
+
+.section-lead {
+  font-size: 1rem; color: var(--muted);
+  line-height: 1.8; max-width: 480px; font-weight: 300;
+}
+
+/* ── PAGE HERO (sub-pages) ── */
+.page-hero {
+  padding: 10rem 3rem 5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--red);
+}
+.page-hero-label {
+  font-size: 0.67rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--red);
+  margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.page-hero-label::before {
+  content: ''; display: block;
+  width: 28px; height: 1px; background: var(--red); flex-shrink: 0;
+}
+.page-hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800; line-height: 1.06;
+  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+}
+.page-hero h1 span { color: var(--red); }
+.page-hero p {
+  font-size: 1.05rem; color: var(--muted); font-weight: 300;
+  max-width: 520px; line-height: 1.8;
+}
+
+/* ── CTA STRIP ── */
+.cta-strip {
+  background: var(--red);
+  padding: 5rem 3rem; text-align: center;
+}
+.cta-strip h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 800; color: white;
+  line-height: 1.05; margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+.cta-strip p {
+  color: rgba(255,255,255,0.72); font-size: 1rem;
+  font-weight: 300; line-height: 1.8;
+  max-width: 440px; margin: 0 auto 2.25rem;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  section { padding: 4.5rem 1.25rem; }
+  .page-hero { padding: 8rem 1.25rem 3.5rem; }
+  footer { flex-direction: column; padding: 2rem 1.25rem; }
+  .footer-links { gap: 1.25rem; }
+  .cta-strip { padding: 3.5rem 1.25rem; }
+}

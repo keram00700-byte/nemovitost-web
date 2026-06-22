@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Fotograf nemovitostí</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── FILTER ── */
+    .filter-bar {
+      padding: 2rem 3rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
+    .filter-btn.active { background: var(--red); border-color: var(--red); color: white; }
+
+    /* ── GALLERY ── */
+    .gallery-section { background: var(--bg); padding: 4rem 3rem; }
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .gal-item {
+      background: var(--surface2);
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gal-item.s { aspect-ratio: 4/3; }
+    .gal-item.t { aspect-ratio: 3/4; }
+    .gal-item.w { grid-column: span 2; aspect-ratio: 16/9; }
+
+    .gal-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.07);
+      position: absolute; z-index: 0;
+    }
+    .gal-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.3s;
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: flex-end;
+      padding: 1.25rem;
+    }
+    .gal-item:hover .gal-overlay { background: rgba(0,0,0,0.65); }
+    .gal-tag {
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--red); font-weight: 700;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+      margin-bottom: 0.3rem;
+    }
+    .gal-name {
+      font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700;
+      color: white; line-height: 1.2;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.3s 0.04s, transform 0.3s 0.04s;
+    }
+    .gal-item:hover .gal-tag,
+    .gal-item:hover .gal-name { opacity: 1; transform: translateY(0); }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,0.92);
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      max-width: 900px; width: 90%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .lightbox-img {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox-img-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.08);
+    }
+    .lightbox-info { padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .lightbox-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .lightbox-close {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      width: 36px; height: 36px; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .lightbox-close:hover { border-color: var(--red); color: var(--red); }
+
+    @media (max-width: 768px) {
+      .filter-bar { padding: 1.5rem 1.25rem; }
+      .gallery-section { padding: 3rem 1.25rem; }
+      .gallery-masonry { grid-template-columns: 1fr 1fr; }
+      .gal-item.w { grid-column: span 2; }
+      .gal-item.t { aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <div class="nav-links">
+      <a href="fotografie.html" class="nav-link">Fotografie</a>
+      <a href="dron.html" class="nav-link">Dron</a>
+      <a href="3d-prohlidky.html" class="nav-link">3D prohlídky</a>
+      <a href="portfolio.html" class="nav-link active">Portfolio</a>
+      <a href="kontakt.html" class="nav-cta">Kontakt</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-label">Moje práce</div>
+      <h1>Portfolio</h1>
+      <p>Výběr z realizovaných zakázek — fotografie nemovitostí, dronové záběry pozemků a 3D prohlídky bytů.</p>
+    </div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Vše</button>
+    <button class="filter-btn" data-filter="foto">Fotografie</button>
+    <button class="filter-btn" data-filter="dron">Dron</button>
+    <button class="filter-btn" data-filter="3d">3D prohlídky</button>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-section">
+    <div class="gallery-masonry" id="gallery">
+
+      <div class="gal-item w" data-cat="foto">
+        <span class="gal-ph">Obývací pokoj — interiér</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Fotografie</span>
+          <span class="gal-name">Rodinný dům — Praha východ</span>
+        </div>
+      </div>
+
+      <div class="gal-item s" data-cat="dron">
+        <span class="gal-ph">Dron — pozemek</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Dron</span>
+          <span class="gal-name">Stavební pozemek — Říčany</span>
+        </div>
+      </div>
+
+      <div class="gal-item t" data-cat="foto">
+        <span class="gal-ph">Kuchyně</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Fotografie</span>
+          <span class="gal-name">Byt 3+kk — Praha 6</span>
+        </div>
+      </div>
+
+      <div class="gal-item s" data-cat="foto">
+        <span class="gal-ph">Exteriér</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Fotografie</span>
+          <span class="gal-name">Vila — Brno</span>
+        </div>
+      </div>
+
+      <div class="gal-item w" data-cat="dron">
+        <span class="gal-ph">Letecký záběr — dron</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Dron</span>
+          <span class="gal-name">Zemědělský pozemek — Středočeský kraj</span>
+        </div>
+      </div>
+
+      <div class="gal-item t" data-cat="3d">
+        <span class="gal-ph">3D prohlídka</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">3D prohlídka</span>
+          <span class="gal-name">Byt 2+kk — Praha 5</span>
+        </div>
+      </div>
+
+      <div class="gal-item s" data-cat="foto">
+        <span class="gal-ph">Koupelna</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Fotografie</span>
+          <span class="gal-name">Byt 4+1 — Plzeň</span>
+        </div>
+      </div>
+
+      <div class="gal-item s" data-cat="dron">
+        <span class="gal-ph">Dron — dům shora</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Dron</span>
+          <span class="gal-name">Rodinný dům — Beroun</span>
+        </div>
+      </div>
+
+      <div class="gal-item s" data-cat="foto">
+        <span class="gal-ph">Ložnice</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Fotografie</span>
+          <span class="gal-name">Byt 3+kk — Praha 10</span>
+        </div>
+      </div>
+
+      <div class="gal-item w" data-cat="foto">
+        <span class="gal-ph">Zahrada — exteriér</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Fotografie</span>
+          <span class="gal-name">Zahrada a terasa — Černošice</span>
+        </div>
+      </div>
+
+      <div class="gal-item s" data-cat="3d">
+        <span class="gal-ph">3D model</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">3D prohlídka</span>
+          <span class="gal-name">Kancelář — Praha 1</span>
+        </div>
+      </div>
+
+      <div class="gal-item s" data-cat="dron">
+        <span class="gal-ph">Dron — západ slunce</span>
+        <div class="gal-overlay">
+          <span class="gal-tag">Dron</span>
+          <span class="gal-name">Penzion — Šumava</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <div class="lightbox-img">
+        <span class="lightbox-img-ph" id="lb-ph">Fotografie</span>
+      </div>
+      <div class="lightbox-info">
+        <span class="lightbox-title" id="lb-title">Název zakázky</span>
+        <button class="lightbox-close" id="lb-close">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="section-label" style="justify-content:center; color:rgba(255,255,255,0.65);">
+      <span style="width:28px;height:1px;background:rgba(255,255,255,0.4);display:block;"></span>
+      Líbí se vám práce?
+    </div>
+    <h2>Vytvořme něco<br>podobného pro vás</h2>
+    <p>Napište mi a domluvíme termín. Do 48 hodin budete mít výsledky, které prodávají.</p>
+    <a href="kontakt.html" class="btn-white">Kontaktovat →</a>
+  </div>
+
+  <footer>
+    <a href="index.html" class="footer-logo">FOTO<span>■</span></a>
+    <div class="footer-links">
+      <a href="fotografie.html" class="footer-link">Fotografie</a>
+      <a href="dron.html" class="footer-link">Dron</a>
+      <a href="3d-prohlidky.html" class="footer-link">3D prohlídky</a>
+      <a href="portfolio.html" class="footer-link">Portfolio</a>
+      <a href="kontakt.html" class="footer-link">Kontakt</a>
+    </div>
+    <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
+  </footer>
+
+  <script>
+    // Filter
+    const btns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.gal-item');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        items.forEach(item => {
+          item.style.display = (f === 'all' || item.dataset.cat === f) ? 'flex' : 'none';
+        });
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lbTitle = document.getElementById('lb-title');
+    const lbPh = document.getElementById('lb-ph');
+    const lbClose = document.getElementById('lb-close');
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const name = item.querySelector('.gal-name')?.textContent || '';
+        const ph = item.querySelector('.gal-ph')?.textContent || '';
+        lbTitle.textContent = name;
+        lbPh.textContent = ph;
+        lightbox.classList.add('open');
+      });
+    });
+
+    lbClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  </script>
+
+</body>
+</html>

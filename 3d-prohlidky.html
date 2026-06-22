@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D prohlídky bytů a domů — Virtuální prohlídka</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--bg); }
+    .how-split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .how-visual {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      aspect-ratio: 4/3;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .how-visual-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.08);
+    }
+    .how-visual::before {
+      content: '🔮';
+      position: absolute; font-size: 6rem; opacity: 0.04;
+    }
+    .how-visual-badge {
+      position: absolute; top: 1.25rem; left: 1.25rem;
+      background: var(--red); padding: 0.5rem 0.9rem;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: white;
+    }
+    .how-steps { display: flex; flex-direction: column; gap: 0; margin-top: 2.5rem; }
+    .how-step {
+      display: flex; gap: 1.25rem;
+      padding: 1.25rem 0; border-bottom: 1px solid var(--border);
+    }
+    .how-step:first-child { border-top: 1px solid var(--border); }
+    .how-step-num {
+      font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 800;
+      color: var(--red); width: 32px; height: 32px; flex-shrink: 0;
+      background: rgba(232,0,26,0.08); border: 1px solid rgba(232,0,26,0.22);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+    .how-step strong { display: block; font-size: 0.88rem; font-weight: 500; margin-bottom: 3px; }
+    .how-step span { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── BENEFITS ── */
+    .benefits { background: var(--surface); }
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); margin-top: 3.5rem;
+    }
+    .benefit {
+      background: var(--surface2); padding: 2.25rem 2rem;
+      transition: background 0.25s;
+    }
+    .benefit:hover { background: #1c1c1c; }
+    .benefit-ico { font-size: 1.75rem; display: block; margin-bottom: 1rem; }
+    .benefit-title {
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .benefit-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── DEMO SECTION ── */
+    .demo { background: var(--bg); }
+    .demo-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .demo-visual {
+      background: var(--surface2);
+      min-height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .demo-visual-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.08);
+    }
+    .demo-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(232,0,26,0.04) 0%, transparent 70%);
+    }
+    .demo-play {
+      position: absolute;
+      width: 64px; height: 64px;
+      background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .demo-play:hover { background: var(--red-dark); }
+    .demo-play::after { content: '▶'; color: white; font-size: 1.1rem; margin-left: 3px; }
+    .demo-info { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .demo-tag {
+      font-size: 0.67rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 1rem;
+    }
+    .demo-title {
+      font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+      margin-bottom: 0.75rem; line-height: 1.1;
+    }
+    .demo-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.75rem; }
+    .demo-stats { display: flex; gap: 2rem; }
+    .demo-stat strong {
+      display: block; font-family: 'Syne', sans-serif;
+      font-size: 1.5rem; font-weight: 800; color: var(--red); letter-spacing: -0.02em;
+    }
+    .demo-stat span { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--surface); }
+    .pricing-cards {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); margin-top: 3.5rem;
+    }
+    .p-card {
+      background: var(--surface2); padding: 2.5rem 2rem;
+    }
+    .p-card.featured { background: var(--red); }
+    .p-name {
+      font-size: 0.67rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 1.25rem;
+    }
+    .p-card.featured .p-name { color: rgba(255,255,255,0.72); }
+    .p-amount {
+      font-family: 'Syne', sans-serif; font-size: 2.8rem; font-weight: 800;
+      color: white; line-height: 1; letter-spacing: -0.03em; display: block;
+    }
+    .p-unit {
+      font-size: 0.75rem; color: var(--muted); display: block;
+      margin-top: 0.3rem; margin-bottom: 1.25rem;
+    }
+    .p-card.featured .p-unit { color: rgba(255,255,255,0.72); }
+    .p-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .p-list li {
+      font-size: 0.8rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .p-list li::before { content: '✓'; color: var(--red); font-weight: 700; }
+    .p-card.featured .p-list li { color: rgba(255,255,255,0.88); }
+    .p-card.featured .p-list li::before { color: white; }
+
+    @media (max-width: 768px) {
+      .how-split { grid-template-columns: 1fr; gap: 3rem; }
+      .how-visual { display: none; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .demo-box { grid-template-columns: 1fr; }
+      .demo-visual { min-height: 200px; }
+      .pricing-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <div class="nav-links">
+      <a href="fotografie.html" class="nav-link">Fotografie</a>
+      <a href="dron.html" class="nav-link">Dron</a>
+      <a href="3d-prohlidky.html" class="nav-link active">3D prohlídky</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="kontakt.html" class="nav-cta">Kontakt</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-label">Služba</div>
+      <h1>3D<br><span>prohlídky</span></h1>
+      <p>Kupec si projde celý byt nebo dům online — kdykoli, odkudkoli, bez nutnosti osobní návštěvy. Jako byste ho vzali přímo dovnitř.</p>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="container">
+      <div class="how-split">
+        <div class="how-visual">
+          <span class="how-visual-ph">3D prohlídka — náhled</span>
+          <div class="how-visual-badge">LIVE 3D</div>
+        </div>
+        <div>
+          <div class="section-label">Co to je</div>
+          <h2 class="section-title">Virtuální prohlídka<br>krok za krokem</h2>
+          <p class="section-lead">3D prohlídka je interaktivní prostorový model interiéru, ve kterém se kupec může volně pohybovat přímo v prohlížeči.</p>
+          <div class="how-steps">
+            <div class="how-step">
+              <div class="how-step-num">01</div>
+              <div>
+                <strong>Skenování nemovitosti</strong>
+                <span>Přijedu se speciální 3D kamerou a systematicky naskenuju každou místnost. Trvá to 1–3 hodiny.</span>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">02</div>
+              <div>
+                <strong>Zpracování modelu</strong>
+                <span>Data se zpracují do interaktivního 3D modelu s možností procházení a půdorysu.</span>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">03</div>
+              <div>
+                <strong>Online odkaz</strong>
+                <span>Dostanete odkaz, který vložíte do inzerátu. Kupec klikne a okamžitě je uvnitř.</span>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">04</div>
+              <div>
+                <strong>Prohlídka kdykoli</strong>
+                <span>Model je dostupný 24/7 na jakémkoli zařízení — počítač, mobil, tablet.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div class="container">
+      <div class="section-label">Výhody</div>
+      <h2 class="section-title">Proč 3D prohlídka<br>funguje</h2>
+      <div class="benefits-grid">
+        <div class="benefit">
+          <span class="benefit-ico">🕐</span>
+          <div class="benefit-title">Prohlídky 24/7</div>
+          <p class="benefit-desc">Kupci si mohou prohlédnout nemovitost kdykoli — v noci, o víkendu, z jiného města nebo ze zahraničí.</p>
+        </div>
+        <div class="benefit">
+          <span class="benefit-ico">🎯</span>
+          <div class="benefit-title">Seriózní zájemci</div>
+          <p class="benefit-desc">Ten, kdo si projde 3D prohlídku, přijde na fyzickou prohlídku mnohem připravenější a vážněji rozhodnutý.</p>
+        </div>
+        <div class="benefit">
+          <span class="benefit-ico">📏</span>
+          <div class="benefit-title">Půdorys a míry</div>
+          <p class="benefit-desc">Model obsahuje interaktivní půdorys s přesnými rozměry místností — kupec si může změřit, jestli se mu vejde nábytek.</p>
+        </div>
+        <div class="benefit">
+          <span class="benefit-ico">⏱️</span>
+          <div class="benefit-title">Ušetříte čas</div>
+          <p class="benefit-desc">Méně fyzických prohlídek s nezainteresovanými lidmi. Osobní schůzka jen s těmi, kteří mají skutečný zájem.</p>
+        </div>
+        <div class="benefit">
+          <span class="benefit-ico">🌍</span>
+          <div class="benefit-title">Kupci ze zahraničí</div>
+          <p class="benefit-desc">Ideální pro prodej zahraniční klientele nebo Čechům žijícím v jiném kraji, kteří nemohou přijet osobně.</p>
+        </div>
+        <div class="benefit">
+          <span class="benefit-ico">📈</span>
+          <div class="benefit-title">Vyšší cena</div>
+          <p class="benefit-desc">Inzeráty s 3D prohlídkou dostávají až 2× více kontaktů a nemovitost se prodá průměrně za vyšší cenu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section class="demo">
+    <div class="container">
+      <div class="section-label">Ukázka</div>
+      <h2 class="section-title">Jak 3D prohlídka<br>vypadá</h2>
+      <div class="demo-box">
+        <div class="demo-visual">
+          <span class="demo-visual-ph">Náhled 3D prohlídky</span>
+          <div class="demo-play"></div>
+        </div>
+        <div class="demo-info">
+          <div class="demo-tag">Ukázka — Byt 2+kk, Praha 5</div>
+          <div class="demo-title">Plně interaktivní<br>prostorový model</div>
+          <p class="demo-desc">Klikem se pohybujete z místnosti do místnosti, otáčíte se na 360°, přepínáte do půdorysu nebo do pohledu shora. Vše v prohlížeči, bez instalace.</p>
+          <div class="demo-stats">
+            <div class="demo-stat">
+              <strong>360°</strong>
+              <span>pohled</span>
+            </div>
+            <div class="demo-stat">
+              <strong>4K</strong>
+              <span>rozlišení</span>
+            </div>
+            <div class="demo-stat">
+              <strong>∞</strong>
+              <span>přístup</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <div class="container">
+      <div class="section-label">Ceník</div>
+      <h2 class="section-title">Ceny 3D<br>prohlídek</h2>
+      <div class="pricing-cards">
+        <div class="p-card">
+          <span class="p-name">Byt</span>
+          <span class="p-amount">4 500 Kč</span>
+          <span class="p-unit">do 80 m²</span>
+          <ul class="p-list">
+            <li>3D model celého bytu</li>
+            <li>Interaktivní půdorys</li>
+            <li>Odkaz pro sdílení</li>
+            <li>90 dní hosting zdarma</li>
+            <li>Dodání do 72 h</li>
+          </ul>
+        </div>
+        <div class="p-card featured">
+          <span class="p-name">Dům / Větší byt</span>
+          <span class="p-amount">7 500 Kč</span>
+          <span class="p-unit">do 200 m²</span>
+          <ul class="p-list">
+            <li>3D model celého domu</li>
+            <li>Interaktivní půdorys</li>
+            <li>Vlastní miniatura nemovitosti</li>
+            <li>180 dní hosting zdarma</li>
+            <li>Možnost embed do webu</li>
+            <li>Dodání do 72 h</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--muted);">Pro větší projekty nad 200 m² nebo komerční nemovitosti cenu připravím individuálně — <a href="kontakt.html" style="color:var(--red);">napište mi</a>.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="section-label" style="justify-content:center; color:rgba(255,255,255,0.65);">
+      <span style="width:28px;height:1px;background:rgba(255,255,255,0.4);display:block;"></span>
+      Začněme
+    </div>
+    <h2>Chcete 3D<br>prohlídku?</h2>
+    <p>Napište mi adresu a velikost nemovitosti. Domluvíme termín skenování a do 3 dnů budete mít hotový model.</p>
+    <a href="kontakt.html" class="btn-white">Poptat 3D prohlídku →</a>
+  </div>
+
+  <footer>
+    <a href="index.html" class="footer-logo">FOTO<span>■</span></a>
+    <div class="footer-links">
+      <a href="fotografie.html" class="footer-link">Fotografie</a>
+      <a href="dron.html" class="footer-link">Dron</a>
+      <a href="3d-prohlidky.html" class="footer-link">3D prohlídky</a>
+      <a href="portfolio.html" class="footer-link">Portfolio</a>
+      <a href="kontakt.html" class="footer-link">Kontakt</a>
+    </div>
+    <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dronové záběry nemovitostí — Letecká fotografie a video</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── BENEFITS ── */
+    .benefits { background: var(--bg); }
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); margin-top: 3.5rem;
+    }
+    .benefit-card {
+      background: var(--surface); padding: 2.5rem 2rem;
+      transition: background 0.25s; position: relative; overflow: hidden;
+    }
+    .benefit-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--red);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .benefit-card:hover { background: var(--surface2); }
+    .benefit-card:hover::after { transform: scaleX(1); }
+    .benefit-icon { font-size: 2rem; display: block; margin-bottom: 1.25rem; }
+    .benefit-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700; margin-bottom: 0.7rem;
+    }
+    .benefit-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── VISUAL SPLIT ── */
+    .visual-split { background: var(--surface); }
+    .split-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border: 1px solid var(--border);
+    }
+    .split-left {
+      background: var(--surface2);
+      aspect-ratio: 1/1;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .split-left-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.08);
+    }
+    .split-left::after {
+      content: '🚁';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 4rem; opacity: 0.06;
+    }
+    .split-right {
+      padding: 3.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .tech-items { display: flex; flex-direction: column; gap: 0; margin-top: 2.25rem; }
+    .tech-item {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: 1rem 0; border-bottom: 1px solid var(--border);
+    }
+    .tech-item:first-child { border-top: 1px solid var(--border); }
+    .tech-dot {
+      width: 8px; height: 8px; background: var(--red);
+      flex-shrink: 0;
+    }
+    .tech-label { font-size: 0.82rem; color: var(--muted); }
+    .tech-label strong { color: var(--text); font-weight: 500; }
+
+    /* ── USE CASES ── */
+    .use-cases { background: var(--bg); }
+    .cases-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem; margin-top: 3.5rem;
+    }
+    .case-item {
+      background: var(--surface);
+      border: 1px solid var(--border); padding: 2rem;
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      transition: border-color 0.25s;
+    }
+    .case-item:hover { border-color: rgba(232,0,26,0.35); }
+    .case-num {
+      font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+      color: rgba(232,0,26,0.2); line-height: 1; flex-shrink: 0;
+    }
+    .case-title {
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .case-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--surface); }
+    .pricing-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); margin-top: 3.5rem;
+    }
+    .price-box {
+      background: var(--surface2); padding: 2.25rem 2rem;
+    }
+    .price-box.featured { background: var(--red); }
+    .price-box-name {
+      font-size: 0.67rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem;
+      display: block;
+    }
+    .price-box.featured .price-box-name { color: rgba(255,255,255,0.75); }
+    .price-box-amount {
+      font-family: 'Syne', sans-serif; font-size: 2.6rem; font-weight: 800;
+      color: white; line-height: 1; letter-spacing: -0.03em; display: block;
+    }
+    .price-box-unit {
+      font-size: 0.75rem; color: var(--muted); display: block; margin-top: 0.3rem; margin-bottom: 1.25rem;
+    }
+    .price-box.featured .price-box-unit { color: rgba(255,255,255,0.75); }
+    .price-box-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .price-box-list li {
+      font-size: 0.8rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .price-box-list li::before { content: '✓'; color: var(--red); font-weight: 700; }
+    .price-box.featured .price-box-list li { color: rgba(255,255,255,0.85); }
+    .price-box.featured .price-box-list li::before { color: white; }
+
+    @media (max-width: 768px) {
+      .benefits-grid { grid-template-columns: 1fr; }
+      .split-grid { grid-template-columns: 1fr; }
+      .split-left { display: none; }
+      .split-right { padding: 2rem 1.25rem; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .pricing-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <div class="nav-links">
+      <a href="fotografie.html" class="nav-link">Fotografie</a>
+      <a href="dron.html" class="nav-link active">Dron</a>
+      <a href="3d-prohlidky.html" class="nav-link">3D prohlídky</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="kontakt.html" class="nav-cta">Kontakt</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-label">Služba</div>
+      <h1>Dronové<br><span>záběry</span></h1>
+      <p>Letecká fotografie a video pozemků, domů a jejich okolí. Záběry z výšky, které ukážou nemovitost v kontextu, který žádná jiná fotka nedokáže.</p>
+    </div>
+  </div>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div class="container">
+      <div class="section-label">Co dron přinese</div>
+      <h2 class="section-title">Záběry, které<br>mění perspektivu</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <span class="benefit-icon">📍</span>
+          <div class="benefit-title">Poloha a okolí</div>
+          <p class="benefit-desc">Kupec okamžitě vidí, kde nemovitost stojí — sousedství, příroda, vzdálenost od města, přístupové cesty a veškerý kontext.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">📐</span>
+          <div class="benefit-title">Rozloha pozemku</div>
+          <p class="benefit-desc">Záběry z výšky dokonale dokumentují skutečnou velikost a tvar pozemku, zahrady nebo celé parcely.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🎬</span>
+          <div class="benefit-title">Cinematic video</div>
+          <p class="benefit-desc">Plynulé dynamické záběry v 4K rozlišení, které vytvoří z vaší nemovitosti film. Skvělé pro sdílení na sociálních sítích.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🏗️</span>
+          <div class="benefit-title">Dokumentace staveb</div>
+          <p class="benefit-desc">Průběh výstavby, stav střechy nebo fasády — dron se dostane tam, kam by jinak nešel nikdo bez lešení.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🌅</span>
+          <div class="benefit-title">Golden hour záběry</div>
+          <p class="benefit-desc">Focení při východu nebo západu slunce vytváří dramatické záběry, které okamžitě zaujmou a budí emoce.</p>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🗺️</span>
+          <div class="benefit-title">Ortofoto a mapa</div>
+          <p class="benefit-desc">Přesné ortofotografické záběry shora pro přesnou dokumentaci pozemků a parcel — využitelné i pro geodetické účely.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VYBAVENÍ -->
+  <section class="visual-split">
+    <div class="container">
+      <div class="split-grid">
+        <div class="split-left">
+          <span class="split-left-ph">Dronový záběr</span>
+        </div>
+        <div class="split-right">
+          <div class="section-label">Vybavení</div>
+          <h2 class="section-title">Profesionální<br>technika</h2>
+          <p class="section-lead">Létám s dronem DJI Mini 4 Pro a jeho 4K kamerou, která garantuje ostré, jasné záběry i za horších světelných podmínek.</p>
+          <div class="tech-items">
+            <div class="tech-item">
+              <div class="tech-dot"></div>
+              <span class="tech-label"><strong>4K rozlišení</strong> — Ultra HD video a fotografie</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-dot"></div>
+              <span class="tech-label"><strong>Stabilizátor obrazu</strong> — Plynulé záběry bez třesu</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-dot"></div>
+              <span class="tech-label"><strong>Dosah 10 km</strong> — Pokrytí i rozsáhlých pozemků</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-dot"></div>
+              <span class="tech-label"><strong>Oprávnění CAA</strong> — Legální létání v ČR</span>
+            </div>
+            <div class="tech-item">
+              <div class="tech-dot"></div>
+              <span class="tech-label"><strong>Pojištění</strong> — Dronové pojištění odpovědnosti</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section class="use-cases">
+    <div class="container">
+      <div class="section-label">Kdy se to hodí</div>
+      <h2 class="section-title">Ideální pro<br>tyto typy nemovitostí</h2>
+      <div class="cases-grid">
+        <div class="case-item">
+          <span class="case-num">01</span>
+          <div>
+            <div class="case-title">Pozemky a parcely</div>
+            <p class="case-desc">Stavební pozemky, zemědělské parcely, zahrady. Kupec okamžitě vidí, co kupuje a jaký má pozemek tvar a okolí.</p>
+          </div>
+        </div>
+        <div class="case-item">
+          <span class="case-num">02</span>
+          <div>
+            <div class="case-title">Rodinné domy a vily</div>
+            <p class="case-desc">Záběr shora odhalí celou dispozici domu, zahradu a navazující pozemek v jejich skutečné velikosti.</p>
+          </div>
+        </div>
+        <div class="case-item">
+          <span class="case-num">03</span>
+          <div>
+            <div class="case-title">Komerční nemovitosti</div>
+            <p class="case-desc">Průmyslové haly, sklady, kanceláře a penziony — dron ukáže kompletní areál i parkování a přístupové komunikace.</p>
+          </div>
+        </div>
+        <div class="case-item">
+          <span class="case-num">04</span>
+          <div>
+            <div class="case-title">Developerské projekty</div>
+            <p class="case-desc">Průběžná dokumentace výstavby, prezentace celého projektu nebo vizualizace bytových komplexů z ptačí perspektivy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <div class="container">
+      <div class="section-label">Ceník</div>
+      <h2 class="section-title">Ceny dronových<br>záběrů</h2>
+      <div class="pricing-row">
+        <div class="price-box">
+          <span class="price-box-name">Foto</span>
+          <span class="price-box-amount">2 500 Kč</span>
+          <span class="price-box-unit">do 30 min létání</span>
+          <ul class="price-box-list">
+            <li>Do 20 dronových fotografií</li>
+            <li>Postprodukce v ceně</li>
+            <li>Dodání do 48 h</li>
+          </ul>
+        </div>
+        <div class="price-box featured">
+          <span class="price-box-name">Foto + Video</span>
+          <span class="price-box-amount">4 500 Kč</span>
+          <span class="price-box-unit">do 60 min létání</span>
+          <ul class="price-box-list">
+            <li>Do 30 fotografií</li>
+            <li>Cinematic video do 2 minut</li>
+            <li>Střih a postprodukce</li>
+            <li>Dodání do 72 h</li>
+          </ul>
+        </div>
+        <div class="price-box">
+          <span class="price-box-name">Prémiový balíček</span>
+          <span class="price-box-amount">Na dotaz</span>
+          <span class="price-box-unit">rozsáhlé projekty a kombinace</span>
+          <ul class="price-box-list">
+            <li>Neomezené focení a video</li>
+            <li>Kombinace s pozemní fotografií</li>
+            <li>Prioritní termín</li>
+            <li>Individuální cena</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="section-label" style="justify-content:center; color:rgba(255,255,255,0.65);">
+      <span style="width:28px;height:1px;background:rgba(255,255,255,0.4);display:block;"></span>
+      Rezervujte termín
+    </div>
+    <h2>Objednáte<br>dronové záběry?</h2>
+    <p>Napište mi adresu a co chcete zdokumentovat. Připravím nabídku a domluvíme termín.</p>
+    <a href="kontakt.html" class="btn-white">Poptat dron →</a>
+  </div>
+
+  <footer>
+    <a href="index.html" class="footer-logo">FOTO<span>■</span></a>
+    <div class="footer-links">
+      <a href="fotografie.html" class="footer-link">Fotografie</a>
+      <a href="dron.html" class="footer-link">Dron</a>
+      <a href="3d-prohlidky.html" class="footer-link">3D prohlídky</a>
+      <a href="portfolio.html" class="footer-link">Portfolio</a>
+      <a href="kontakt.html" class="footer-link">Kontakt</a>
+    </div>
+    <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
+  </footer>
+
+</body>
+</html>

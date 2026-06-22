@@ -3,195 +3,417 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Prodáme vaši nemovitost rychle a za správnou cenu</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <title>Fotograf nemovitostí — Fotografie, Dron, 3D prohlídky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 3rem 6rem;
+      position: relative; overflow: hidden;
+      background: var(--bg);
+    }
+    .hero-line {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; background: var(--red);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 880px; }
+    .hero-label {
+      font-size: 0.67rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--red);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-label::before {
+      content: ''; display: block;
+      width: 28px; height: 1px; background: var(--red);
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 800; line-height: 1.0;
+      letter-spacing: -0.03em; margin-bottom: 2rem;
+    }
+    .hero h1 .accent { color: var(--red); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted); font-weight: 300;
+      max-width: 500px; line-height: 1.8; margin-bottom: 3rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .hero-inner > * {
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-inner > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-inner > *:nth-child(2) { animation-delay: 0.15s; }
+    .hero-inner > *:nth-child(3) { animation-delay: 0.28s; }
+    .hero-inner > *:nth-child(4) { animation-delay: 0.42s; }
 
-:root {
-  --bg: #080808;
-  --surface: #111111;
-  --surface2: #1A1A1A;
-  --border: rgba(255,255,255,0.07);
-  --accent: #00E87A;
-  --accent2: #00C868;
-  --text: #F2F2F0;
-  --muted: rgba(242,242,240,0.45);
-  --green: #00E87A;
-  --red: #FF5C5C;
-  --radius: 12px;
-}
+    /* ── STATS ── */
+    .stats {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item {
+      padding: 2.25rem 2rem; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem; font-weight: 800;
+      color: var(--red); display: block; letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-top: 0.4rem; display: block;
+    }
 
-html { scroll-behavior: smooth; }
+    /* ── SERVICES ── */
+    .services { background: var(--bg); }
+    .services-intro {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: end; margin-bottom: 3.5rem;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      gap: 1px; background: var(--border);
+    }
+    .service-card {
+      background: var(--surface);
+      padding: 2.5rem 2rem;
+      transition: background 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: var(--red);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .service-card:hover { background: var(--surface2); }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-num {
+      font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+      color: rgba(232,0,26,0.1); line-height: 1; margin-bottom: 1.5rem;
+      display: block;
+    }
+    .service-icon { font-size: 1.75rem; display: block; margin-bottom: 1.1rem; }
+    .service-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 0.7rem;
+    }
+    .service-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.72; }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 1.5rem; font-size: 0.75rem;
+      color: var(--red); text-decoration: none;
+      letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+      transition: gap 0.2s;
+    }
+    .service-link:hover { gap: 0.85rem; }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
+    /* ── WHY ── */
+    .why { background: var(--surface); }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .why-img {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      aspect-ratio: 4/5;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .why-img-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.1);
+    }
+    .why-img::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 55%; height: 3px; background: var(--red);
+    }
+    .why-badge {
+      position: absolute; bottom: -1.25rem; right: -1.25rem;
+      background: var(--red); padding: 1.25rem 1.75rem;
+    }
+    .why-badge strong {
+      display: block; font-family: 'Syne', sans-serif;
+      font-size: 2.2rem; font-weight: 800; color: white; line-height: 1;
+    }
+    .why-badge span {
+      font-size: 0.66rem; color: rgba(255,255,255,0.8);
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .why-points { display: flex; flex-direction: column; margin-top: 2.5rem; }
+    .why-point {
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+    }
+    .why-point:first-child { border-top: 1px solid var(--border); }
+    .why-icon {
+      width: 34px; height: 34px; flex-shrink: 0;
+      background: rgba(232,0,26,0.08); border: 1px solid rgba(232,0,26,0.22);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; margin-top: 2px;
+    }
+    .why-point strong { display: block; font-size: 0.88rem; font-weight: 500; margin-bottom: 3px; }
+    .why-point span { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1.1rem 3rem;
-  background: rgba(8,8,8,0.88);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 1rem; font-weight: 700;
-  color: var(--text); letter-spacing: 0.03em;
-}
-.nav-logo span { color: var(--accent); }
-.nav-right { display: flex; align-items: center; gap: 1.5rem; }
-.nav-link { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.nav-link:hover { color: var(--text); }
-.nav-cta {
-  background: var(--accent); color: #080808;
-  padding: 0.6rem 1.4rem; border-radius: 6px;
-  font-size: 0.82rem; font-weight: 600;
-  text-decoration: none; transition: all 0.2s;
-  letter-spacing: 0.02em;
-}
-.nav-cta:hover { background: #00C868; transform: translateY(-1px); }
+    /* ── PORTFOLIO PREVIEW ── */
+    .portfolio-preview { background: var(--bg); }
+    .pp-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem;
+    }
+    .pp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .pp-item {
+      background: var(--surface);
+      aspect-ratio: 4/3;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .pp-item:first-child { grid-column: span 2; aspect-ratio: 16/9; }
+    .pp-ph {
+      font-family: 'Syne', sans-serif; font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.08);
+    }
+    .pp-overlay {
+      position: absolute; inset: 0;
+      background: rgba(232,0,26,0);
+      display: flex; align-items: flex-end; padding: 1.25rem;
+      transition: background 0.3s;
+    }
+    .pp-item:hover .pp-overlay { background: rgba(232,0,26,0.18); }
+    .pp-label {
+      font-family: 'Syne', sans-serif; font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: white; font-weight: 600;
+      opacity: 0; transition: opacity 0.3s; transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .pp-item:hover .pp-label { opacity: 1; transform: translateY(0); }
 
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 10rem 3rem 5rem;
-  position: relative; overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0; z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(0,232,122,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,232,122,0.03) 0%, transparent 70%);
-}
-.hero-grid {
-  position: absolute; inset: 0; z-index: 0; opacity: 0.03;
-  background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-.hero-inner { position: relative; z-index: 1; max-width: 800px; }
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(0,232,122,0.08); border: 1px solid rgba(0,232,122,0.25);
-  border-radius: 100px; padding: 0.4rem 1rem;
-  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
-  color: var(--accent); text-transform: uppercase;
-  margin-bottom: 2rem;
-  animation: fadeUp 0.5s ease both;
-}
-.badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
-.hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3.2rem, 7vw, 6rem);
-  font-weight: 600; line-height: 1.15;
-  letter-spacing: 0.01em;
-  margin-bottom: 1.75rem;
-  animation: fadeUp 0.5s 0.1s ease both;
-}
-.hero h1 .line2 { color: var(--accent); }
-.hero-sub {
-  font-size: 1.1rem; color: var(--muted); font-weight: 300;
-  max-width: 560px; line-height: 1.75; margin-bottom: 2.5rem;
-  animation: fadeUp 0.5s 0.2s ease both;
-}
-.hero-sub strong { color: var(--text); font-weight: 500; }
-.hero-actions {
-  display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
-  margin-bottom: 3rem;
-  animation: fadeUp 0.5s 0.3s ease both;
-}
-.btn-gold {
-  background: var(--accent); color: #080808;
-  padding: 1rem 2rem; border-radius: 8px;
-  font-size: 0.95rem; font-weight: 600;
-  text-decoration: none; transition: all 0.2s;
-  display: inline-flex; align-items: center; gap: 0.5rem;
-}
-.btn-gold:hover { background: #00C868; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,232,122,0.35); }
-.btn-ghost {
-  border: 1.5px solid rgba(255,255,255,0.15); color: var(--muted);
-  padding: 1rem 2rem; border-radius: 8px;
-  font-size: 0.95rem; font-weight: 400;
-  text-decoration: none; transition: all 0.2s;
-}
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-.hero-trust {
-  display: flex; gap: 2rem; flex-wrap: wrap;
-  animation: fadeUp 0.5s 0.4s ease both;
-}
-.trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--muted); }
-.trust-icon { color: var(--green); font-size: 0.9rem; }
+    @media (max-width: 768px) {
+      .hero { padding: 0 1.25rem 4rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+      .services-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .why-img { aspect-ratio: 3/2; }
+      .pp-grid { grid-template-columns: 1fr; }
+      .pp-item:first-child { grid-column: span 1; aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body>
 
-/* ── URGENCY BAR ── */
-.urgency-bar {
-  background: linear-gradient(90deg, rgba(0,232,122,0.06), rgba(0,232,122,0.03));
-  border-top: 1px solid rgba(0,232,122,0.15);
-  border-bottom: 1px solid rgba(0,232,122,0.15);
-  padding: 1rem 3rem;
-  display: flex; align-items: center; justify-content: center; gap: 2rem;
-  flex-wrap: wrap; text-align: center;
-}
-.urgency-item { font-size: 0.82rem; color: var(--muted); }
-.urgency-item strong { color: var(--accent); font-size: 1.2rem; display: block; font-family: 'Syne', sans-serif; font-weight: 700; }
+  <nav>
+    <a href="index.html" class="nav-logo">FOTO<span>■</span></a>
+    <div class="nav-links">
+      <a href="fotografie.html" class="nav-link">Fotografie</a>
+      <a href="dron.html" class="nav-link">Dron</a>
+      <a href="3d-prohlidky.html" class="nav-link">3D prohlídky</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="kontakt.html" class="nav-cta">Kontakt</a>
+    </div>
+  </nav>
 
-/* ── SECTION BASE ── */
-section { padding: 6rem 3rem; }
-.section-label {
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
-}
-.section-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 700; line-height: 1.1;
-  letter-spacing: -0.02em; margin-bottom: 1.25rem;
-}
-.section-lead { font-size: 1rem; color: var(--muted); line-height: 1.75; max-width: 520px; }
-.container { max-width: 1100px; margin: 0 auto; }
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-line"></div>
+    <div class="hero-inner">
+      <div class="hero-label">Profesionální fotograf nemovitostí</div>
+      <h1>Nemovitosti<br>v <span class="accent">nejlepším</span><br>světle.</h1>
+      <p class="hero-sub">Fotografie, drony a 3D prohlídky, které skutečně prodávají. Každý záběr navržen tak, aby zaujal kupce na první pohled.</p>
+      <div class="hero-actions">
+        <a href="kontakt.html" class="btn-red">Nezávazná poptávka →</a>
+        <a href="portfolio.html" class="btn-outline">Zobrazit portfolio</a>
+      </div>
+    </div>
+  </section>
 
-/* ── WHAT IS HOMESTAGING ── */
-.what { background: var(--surface); }
-.what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-.what-visual {
-  background: #1A1A1A; border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius);
-  padding: 2.5rem; position: relative; overflow: hidden;
-}
-.what-visual::before {
-  content: '';
-  position: absolute; top: -40px; right: -40px;
-  width: 150px; height: 150px;
-  background: radial-gradient(circle, rgba(0,232,122,0.12), transparent 70%);
-}
-.myth-item {
-  display: flex; align-items: flex-start; gap: 1rem;
-  padding: 1rem 0; border-bottom: 1px solid var(--border);
-}
-.myth-item:last-child { border-bottom: none; }
-.myth-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
-.myth-text strong { display: block; font-size: 0.88rem; font-weight: 500; margin-bottom: 2px; }
-.myth-text span { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
-.what-points { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
-.what-point { display: flex; gap: 1rem; align-items: flex-start; }
-.what-num {
-  font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700;
-  color: var(--accent); background: rgba(0,232,122,0.08);
-  border: 1px solid rgba(0,232,122,0.2);
-  width: 28px; height: 28px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
-.what-point-text strong { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 3px; }
-.what-point-text span { font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <span class="stat-num">200+</span>
+      <span class="stat-label">Nafocených nemovitostí</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">48h</span>
+      <span class="stat-label">Dodání fotografií</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3×</span>
+      <span class="stat-label">Rychlejší prodej</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Spokojených klientů</span>
+    </div>
+  </div>
 
-/* ── HOW WE SELL ── */
-.how { background: var(--bg); }
-.how-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-b...
+  <!-- SERVICES -->
+  <section class="services">
+    <div class="container">
+      <div class="services-intro">
+        <div>
+          <div class="section-label">Co nabízím</div>
+          <h2 class="section-title">Tři způsoby,<br>jak prodat rychleji</h2>
+        </div>
+        <p class="section-lead">Kombinace profesionální fotografie, dronových záběrů a 3D prohlídek dává vaší nemovitosti maximální šanci na trhu.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-num">01</span>
+          <span class="service-icon">📷</span>
+          <div class="service-title">Fotografie nemovitostí</div>
+          <p class="service-desc">Profesionální interiérová a exteriérová fotografie se správným světlem, kompozicí a postprodukcí, která zvýrazní přednosti každé nemovitosti.</p>
+          <a href="fotografie.html" class="service-link">Zjistit více →</a>
+        </div>
+        <div class="service-card">
+          <span class="service-num">02</span>
+          <span class="service-icon">🚁</span>
+          <div class="service-title">Dronové záběry</div>
+          <p class="service-desc">Letecká fotografie a video pozemků, domů a okolí. Záběry z výšky ukazují polohu, rozlohu a kontext nemovitosti tak, jak to žádná jiná fotka nedokáže.</p>
+          <a href="dron.html" class="service-link">Zjistit více →</a>
+        </div>
+        <div class="service-card">
+          <span class="service-num">03</span>
+          <span class="service-icon">🔮</span>
+          <div class="service-title">3D prohlídky</div>
+          <p class="service-desc">Virtuální 3D prohlídky bytů a domů. Kupec si projde celou nemovitost online — kdykoli a odkudkoli, bez nutnosti osobní návštěvy.</p>
+          <a href="3d-prohlidky.html" class="service-link">Zjistit více →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY ME -->
+  <section class="why">
+    <div class="container">
+      <div class="why-grid">
+        <div style="position:relative;">
+          <div class="why-img">
+            <span class="why-img-ph">Ukázková fotografie</span>
+          </div>
+          <div class="why-badge">
+            <strong>5+</strong>
+            <span>let praxe</span>
+          </div>
+        </div>
+        <div>
+          <div class="section-label">Proč já</div>
+          <h2 class="section-title">Fotografie,<br>která prodává</h2>
+          <p class="section-lead">Nemovitost s profesionálními fotografiemi se prodává průměrně 3× rychleji. Každý záběr dělám s tímto cílem.</p>
+          <div class="why-points">
+            <div class="why-point">
+              <div class="why-icon">⚡</div>
+              <div>
+                <strong>Rychlé dodání</strong>
+                <span>Fotografie připraveny do 48 hodin. Video a 3D prohlídky do 72 hodin od focení.</span>
+              </div>
+            </div>
+            <div class="why-point">
+              <div class="why-icon">🎯</div>
+              <div>
+                <strong>Moderní vybavení</strong>
+                <span>Profesionální zrcadlovka, dron s vysokým rozlišením a kamera pro 3D skenování.</span>
+              </div>
+            </div>
+            <div class="why-point">
+              <div class="why-icon">📍</div>
+              <div>
+                <strong>Flexibilní termíny</strong>
+                <span>Focení přizpůsobím vašemu harmonogramu. Víkendy a večery bez problémů.</span>
+              </div>
+            </div>
+            <div class="why-point">
+              <div class="why-icon">✅</div>
+              <div>
+                <strong>Postprodukce v ceně</strong>
+                <span>Každá fotografie prochází profesionální úpravou barev a světla. Bez příplatků.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO PREVIEW -->
+  <section class="portfolio-preview">
+    <div class="container">
+      <div class="pp-header">
+        <div>
+          <div class="section-label">Portfolio</div>
+          <h2 class="section-title">Vybrané práce</h2>
+        </div>
+        <a href="portfolio.html" class="btn-outline">Celé portfolio →</a>
+      </div>
+      <div class="pp-grid">
+        <div class="pp-item">
+          <span class="pp-ph">Interiér — obývací pokoj</span>
+          <div class="pp-overlay"><span class="pp-label">Obývací pokoj — Praha</span></div>
+        </div>
+        <div class="pp-item">
+          <span class="pp-ph">Dron — pozemek</span>
+          <div class="pp-overlay"><span class="pp-label">Pozemek — Středočeský kraj</span></div>
+        </div>
+        <div class="pp-item">
+          <span class="pp-ph">Exteriér — dům</span>
+          <div class="pp-overlay"><span class="pp-label">Rodinný dům — Brno</span></div>
+        </div>
+        <div class="pp-item">
+          <span class="pp-ph">3D prohlídka</span>
+          <div class="pp-overlay"><span class="pp-label">Byt 3+kk — Praha 6</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="section-label" style="justify-content:center; color:rgba(255,255,255,0.65);">
+      <span style="width:28px;height:1px;background:rgba(255,255,255,0.4);display:block;"></span>
+      Začněme spolupráci
+    </div>
+    <h2>Připraven fotit<br>vaši nemovitost?</h2>
+    <p>Napište mi nebo zavolejte. Domluvíme termín a připravím nabídku přesně na míru.</p>
+    <a href="kontakt.html" class="btn-white">Kontaktovat →</a>
+  </div>
+
+  <footer>
+    <a href="index.html" class="footer-logo">FOTO<span>■</span></a>
+    <div class="footer-links">
+      <a href="fotografie.html" class="footer-link">Fotografie</a>
+      <a href="dron.html" class="footer-link">Dron</a>
+      <a href="3d-prohlidky.html" class="footer-link">3D prohlídky</a>
+      <a href="portfolio.html" class="footer-link">Portfolio</a>
+      <a href="kontakt.html" class="footer-link">Kontakt</a>
+    </div>
+    <span class="footer-copy">© 2025 Fotograf nemovitostí</span>
+  </footer>
+
+</body>
+</html>
